@@ -1,5 +1,7 @@
 # vue-demineur
 
+The Mine Sweeper game written using vue.js framework.  
+
 ## Project setup
 ```
 npm install
