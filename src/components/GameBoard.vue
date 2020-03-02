@@ -34,14 +34,15 @@ export default class GameBoard extends Vue {
   private bombSet = false;
   private azimuth = ['ne', 'n', 'nw', 'w', 'e', 'sw', 's', 'se' ];
   private clickedOnce = false;
-  // life cycle
+
+// life cycle
 
   private created() {
     this.initBoard();
   }
 
   private mounted() {
-    this.$store.subscribe((mutation) => {
+    this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'incrementNbGames') {
         this.initBoard();
       }
@@ -370,7 +371,7 @@ export default class GameBoard extends Vue {
   }
 
   .cellUnclick {
-    color: orange;
+    /* color: orange; */
     background-image: url(../assets/game-cell.png);
   }
 
@@ -398,4 +399,5 @@ export default class GameBoard extends Vue {
     background-position: center center;
     background-size: 16px;
   }
+
 </style>

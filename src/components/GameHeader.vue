@@ -2,11 +2,18 @@
 
   <div id='game-header'>
     <div class="interieur">
-      Vue MineSweeper v1.0 - 
-      Cols: {{ this.$store.state.NbCol }} 
-      Rows: {{ this.$store.state.NbRow }}
-      Bombs: {{ this.$store.state.NbBomb }}
-      
+      <div class='start-pos'>
+        Vue MineSweeper v1.0 - 
+        Cols: {{ this.$store.state.NbCol }} 
+        Rows: {{ this.$store.state.NbRow }}
+        Bombs: {{ this.$store.state.NbBomb }}
+      </div>
+      <div class='end-pos'>
+        <div id='div-gear' @click="onGearClick" @mouseover="switchGear" @mouseout="switchGear" title='Settings'>
+          <img v-if="!this.boldGear" src='../assets/gear.png' class='gear-icon' alt='Settings' />
+          <img v-if="this.boldGear" src='../assets/gear-bold.png' class='gear-icon' alt='Settings' />
+        </div>
+      </div>
     </div>
     <div class="container">
       <div style="justify-self: start;"><div class="digit-box">{{ displayRemainingBomb }}</div></div>
@@ -33,6 +40,7 @@ export default class GameHeader extends Vue {
   private elapsed = 0;
   private flagged = 0;
   private intervalHandle = 0;
+  private boldGear = false;
 
   // life cycle
 
@@ -55,8 +63,14 @@ export default class GameHeader extends Vue {
 
   // event handlers
 
+  onGearClick(e: Event): void {
+    this.$store.dispatch('toggleShowConfig');
+    console.log('gear click');
+    e.preventDefault();
+  }
+
   // restart the whole smorgasboard !!
-  private restart(e: Event) {
+  private restart(e: Event): void{
     e.preventDefault();
     this.$store.dispatch('incrementNbGames');
     this.$store.dispatch('setNbFlagged', 0);
@@ -65,6 +79,10 @@ export default class GameHeader extends Vue {
   }
 
   // private 
+
+  private switchGear(): void {
+    this.boldGear = !this.boldGear;
+  }
 
   private initComponent(): void {
     clearInterval(this.intervalHandle);
@@ -121,7 +139,10 @@ export default class GameHeader extends Vue {
     border-bottom: solid 2px black;
   }
 
-  #game-header .interieur {
+   .interieur {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
     padding: 5px;
     box-sizing: border-box;
     font-size: 12pt;
@@ -137,6 +158,7 @@ export default class GameHeader extends Vue {
   .digit-box {
     font-family: 'DS-Digital Bold';
     font-weight: normal;
+    font-weight: normal;
     font-size: 42px;
     color: red;
     width: 65px;
@@ -149,4 +171,17 @@ export default class GameHeader extends Vue {
     margin-left: 20px;
   }
 
+  .start-pos {
+    justify-self: start;
+  }
+
+  .end-pos {
+    justify-self: end;
+  }
+
+  .gear-icon {
+    width: 24px;
+    margin-right: 20px;
+    cursor: pointer;
+  }
 </style>

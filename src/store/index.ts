@@ -12,6 +12,7 @@ export default new Vuex.Store({
     Run: false,   // player start to interact (aka firts click)
     Boom: false,  // player explode himself
     NbGames: 0,   // nb game played increment when restart is clicked (smiley icon) allows restart watching
+    ShowConfig: false,
   },
   mutations: {
     setNbRow(state, v: number): void {
@@ -45,6 +46,11 @@ export default new Vuex.Store({
     incrementNbGames(state) {
       state.NbGames++;
     },
+
+    toggleShowConfig(state) {
+      state.ShowConfig = !state.ShowConfig;
+    },
+    
   },
   actions: {
     setNbRow(context, v: number) {
@@ -77,7 +83,11 @@ export default new Vuex.Store({
 
     incrementNbGames(context) {
       context.commit('incrementNbGames');
-    }
+    },
+
+    toggleShowConfig(context) {
+      context.commit('toggleShowConfig');
+    },
   },
   modules: {
   }
