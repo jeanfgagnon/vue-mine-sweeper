@@ -43,6 +43,7 @@ export default class App extends Vue {
 
 #divLogo img {
   width: 80px;
+  height: 70px;
 }
 
 </style>
