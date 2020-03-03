@@ -21,7 +21,7 @@
           Columns
         </div>
         <div class='gc-input-zone'>
-          <input type='number' ref="refTxtCol" id='txtCol' class='gc-input' :value="NbCols" />
+          <input type='number' ref="refTxtCol" id='txtCol' class='gc-input' @change="inputChanged($event, 'col')" :value="NbCols" />
         </div>      
       </div>
 
@@ -30,7 +30,7 @@
           Bombs
         </div>
         <div class='gc-input-zone'>
-          <input type='number' ref="refTxtBomb" id='txtBomb' class='gc-input' :value="NbBombs" />
+          <input type='number' ref="refTxtBomb" id='txtBomb' class='gc-input' @change="inputChanged($event, 'bomb')"  :value="NbBombs" />
         </div>      
       </div>
 
@@ -63,8 +63,21 @@ export default class GameConfig extends Vue {
   // event handlers
   private  inputChanged(e: Event, src: string) { 
     const el = e.target as HTMLInputElement;
-    const newValue = el.value;
-    console.log('change %s valeur %s', src, newValue);
+    const newValue = parseInt(el.value);
+    
+    switch (src) {
+      case 'row':
+        this.$store.dispatch('setNbRow', newValue);
+        break;
+      
+      case 'col':
+        this.$store.dispatch('setNbCol', newValue);
+        break; 
+
+      case 'bomb':
+        this.$store.dispatch('setNbBomb', newValue);
+        break; 
+    }
   }
 }
 
@@ -96,6 +109,8 @@ export default class GameConfig extends Vue {
     border: none;
     color: #252525;
     background-color: white;
+    box-sizing: border-box;
+    padding: 2px 5px 2px 5px;
     border-radius: 5px;
     width: 100%;
   }

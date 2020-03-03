@@ -35,7 +35,7 @@ export default class GameBoard extends Vue {
   private azimuth = ['ne', 'n', 'nw', 'w', 'e', 'sw', 's', 'se' ];
   private clickedOnce = false;
 
-// life cycle
+  // life cycle
 
   private created() {
     this.initBoard();
@@ -43,7 +43,15 @@ export default class GameBoard extends Vue {
 
   private mounted() {
     this.$store.subscribe((mutation, state) => {
-      if (mutation.type === 'incrementNbGames') {
+      if (mutation.type === 'incrementNbGames') {        
+        this.initBoard();
+      }
+      else if (mutation.type === 'setNbRow') {
+        this.myRowCount = this.$store.state.NbRow;
+        this.initBoard();
+      }
+      else if (mutation.type === 'setNbCol') {
+        this.myColCount = this.$store.state.NbCol; 
         this.initBoard();
       }
     });
