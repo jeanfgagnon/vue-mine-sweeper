@@ -52,9 +52,15 @@ export default class GameForm extends Vue {
       if (mutation.type === 'toggleShowConfig') {
         this.showConfigPanel(state.ShowConfig);
       }
+      else if (mutation.type === 'setNbCol') {
+        this.myWidth = `${(this.$store.state.NbCol * 27) + 10}px`;
+        this.$nextTick(function() {
+          this.placeConfigPanel();
+        })
+      }
     });
     this.$refs.configPanel.style.display = 'inline';
-    this.prepareConfigPanel();
+    this.placeConfigPanel();
   }
 
   // privates
@@ -77,7 +83,7 @@ bounding
     this.ConfigAnimClass = onOff ? ['open'] : ['close'];
   }
 
-  private prepareConfigPanel() {
+  private placeConfigPanel() {
     const gameFormSize = this.$refs.refGameForm.getBoundingClientRect();
     const configPanelSize = this.$refs.configPanel.getBoundingClientRect(); 
 
